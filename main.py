@@ -1,16 +1,17 @@
-from table_generators import t001_기록물철_보존기간_0000
-from table_generators import t002_기록물철_보존기간_0000_복합포함
-from table_generators import t003_기록물건_보존기간_3년
-from table_generators import t004_예시
+from table_generators import retention_processor
 
 
 TABLES = {
-    "1": ("기록물철별 보존기간 책정 현황(0000)", t001_기록물철_보존기간_0000.run),
-    "2": ("기록물철별 보존기간 책정 현황(0000)_복합포함", t002_기록물철_보존기간_0000_복합포함.run),
-    "3": ("기록물건별 보존기간 책정 현황(최근 3년간)", t003_기록물건_보존기간_3년.run),
-    "4": ("예시 파일 입니다", t004_예시.run)
-}
+    "1": (
+        "기록물철별 보존기간 책정 현황",
+        retention_processor.run_local
+    ),
 
+    "2": (
+        "추후 추가 예정",
+        None
+    )
+}
 
 print("===== 표 생성 프로그램 =====")
 
@@ -24,16 +25,13 @@ choice = input("번호 선택: ")
 
 if choice in TABLES:
 
-    institution = input(
-        "분석할 기관명을 띄어쓰기 없이 정확하게 입력해주세요: "
-    )
+    if choice in TABLES:
 
-    year = input(
-        "기준년도를 한글 없이 숫자만 입력해주세요: "
-    )
+        if TABLES[choice][1] is None:
+            print("아직 구현되지 않은 기능입니다.")
 
-    TABLES[choice][1](institution, year)
+        else:
+            TABLES[choice][1]()
 
-
-else:
-    print("잘못된 번호입니다.")
+    else:
+        print("잘못된 번호입니다.")
